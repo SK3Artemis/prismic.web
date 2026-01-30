@@ -10,6 +10,7 @@
   <meta content="Prismic's Avatar Search - Web Edition" property="og:title" />
   <meta content="idk what to write here..." property="og:description" />
   <meta content="#9001db" data-react-helmet="true" name="theme-color" />
+  <meta property="og:type" content="website">
 
   <div><marquee><small><code>Additions: Search Author Name (https://vrchat.com/home/search/). Open Avatar in VRCX (vrcx://avatar/avtr_id). "Switch" to Avatar (vrcx://switchavatar/avtr_id)</code></marquee></div>
 </head>
@@ -20,11 +21,14 @@
         <b><span class="avi-name">MyAwesomeAvi</span></b> - <a class="vrcn" href="https://example.com" target="_blank"><span class="avi-author">CoolGuy</span></a>
       </p>
       <span class="avi-description">BLahblahblash description be like !!!!</span>
-      <a class="vrc" href="https://example.com" target="_blank"></a>
-      <a class="vrcx" href="https://example.com" target="_blank"></a>
-      <div class="platforms">
-        <div class="platform pc"></div>
-        <div class="platform quest quest-inactive"></div>
+      <div class="bottom-buttons">
+        <a class="vrcx" href="vrcx://avatar/avatrId"></a>
+        <a class="website" href="https://vrchat.com/home/avatar/avatrId" target="_blank"></a>
+        <div class="platforms">
+          <div class="platform pc" title="Supported on PC"><img src="./assets/plat-pc.svg"></div>
+          <div class="platform quest disabled" title="Supported on Android"><img src="./assets/plat-quest.svg"></div>
+          <div class="platform ios disabled" title="Supported on iOS"><img src="./assets/plat-ios.svg"></div>
+        </div>
       </div>
       <div class="switchavatar">
         <a class="vrcxs" href="https://example.com" target="_blank">Switch</a>

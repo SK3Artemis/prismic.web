@@ -29,12 +29,14 @@ function makeAviElement(dict) {
   clone.querySelector(".vrcn").href = "https://vrchat.com/home/search/" + dict.author;
   clone.querySelector(".avi-author").innerText = dict.author;
   clone.querySelector(".avi-description").innerText = dict.description;
-  clone.querySelector(".vrc").href = "https://vrchat.com/home/avatar/" + dict.avatrId;
+  clone.querySelector(".website").href = "https://vrchat.com/home/avatar/" + dict.avatrId;
   clone.querySelector(".vrcx").href = "vrcx://avatar/" + dict.avatrId;
   clone.querySelector(".vrcxs").href = "vrcx://switchavatar/" + dict.avatrId;
   if(dict.quest) {
-    var q = clone.querySelector(".quest")
-    q.classList.remove("quest-inactive")
+    clone.querySelector(".quest").classList.remove("disabled");
+  }
+  if(dict.ios) {
+    clone.querySelector(".ios").classList.remove("disabled");
   }
   return clone;
 }
@@ -100,15 +102,15 @@ window.addEventListener("DOMContentLoaded", e=>{
     // because the guy adds avatars to the end, these are the newest avatars
     for(var i = searchData.entries.length - 1; i >= 0; i--) {
       const entry = searchData.entries[i];
-      if(names && entry.name && entry.name.includes(query)) {
+      if(names && entry.name && entry.name.toLowerCase().includes(query)) {
         searchMatched(entry);
         continue;
       }
-      if(authors && entry.author && entry.author.includes(query)) {
+      if(authors && entry.author && entry.author.toLowerCase().includes(query)) {
         searchMatched(entry);
         continue;
       }
-      if(descriptions && entry.description && entry.description.includes(query)) {
+      if(descriptions && entry.description && entry.description.toLowerCase().includes(query)) {
         searchMatched(entry);
         continue;
       }
@@ -263,6 +265,71 @@ async function getPrismicObj(url) {
 
   for(var i = 0; i < fileAvatars; i++) {
     var obj = {};
+    const f = flags[i];
+/*
+       Platform:
+          1 - PC
+          2 - Quest
+          4 - IOS
+       Impostor:
+          1 - PC
+          2 - Quest
+          4 - IOS
+       PC Rating:
+          0 - Unknown
+          1 - Excellent
+          2 - Good
+          3 - Medium
+          4 - Poor
+          5 - Very Poor
+       Quest Rating:
+          0 - Unknown
+          1 - Excellent
+          2 - Good
+          3 - Medium
+          4 - Poor
+          5 - Very Poor
+       IOS Rating:
+          0 - Unknown
+          1 - Excellent
+          2 - Good
+          3 - Medium
+          4 - Poor
+          5 - Very Poor
+       Content Warnings:
+          1 - Sexually suggestive
+          2 - Adult Language
+          4 - Graphic Violence
+          8 - Excessive Gore
+          16 - Extreme Horror
+        Style Filter:
+          1 - Pop Culture
+          2 - Furry
+          4 - Sci-Fi
+          8 - Anime
+          16 - Cartoon
+          32 - Objects
+          64 - Human
+          128 - Realistic
+          256 - Animal
+          512 - Fantasy
+          1024 - Fashion
+        Marketplace:
+          0 - Not in Marketplace
+          1 - In Marketplace
+        */
+
+        const avatarFlags = [
+            (f >> 29) & 7, // Platform
+            (f >> 26) & 7, // Impostor
+            (f >> 17) & 7, // PC Rating
+            (f >> 20) & 7, // Quest Rating
+            (f >> 23) & 7, // IOS Rating
+            (f >> 12) & 31, // Content Warnings
+            (f >> 1) & 2047, // Style Filter
+            (f) & 1 // Marketplace
+        ];
+	
     const avatarId = decodeAvatarId(avatarIds.slice(i * 16, (i * 16) + 16), dynamicBytes);
     const nameDesc = avatarNames[i].split("\t");
     obj.name = nameDesc[0].split("").reverse().join("");
@@ -273,6 +340,7 @@ async function getPrismicObj(url) {
     avatar_data.idMap.actualMap[avatarId] = obj;
     avatar_data.entries.push(obj);
     obj.avatrId = avatarId;
+    obj.flags = avatarFlags;
   }
 
   return avatar_data;
