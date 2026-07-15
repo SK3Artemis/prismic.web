@@ -2,7 +2,7 @@ const urls = [
   "https://gist.githubusercontent.com/Prismic247/930d08f34c61e4282992cdb3afbafca0/raw/pasavtrdb.txt",
   "https://gist.githubusercontent.com/Prismic247/930d08f34c61e4282992cdb3afbafca0/raw/pasavtrdb_qst.txt",
   "https://gist.githubusercontent.com/Prismic247/930d08f34c61e4282992cdb3afbafca0/raw/pasavtrdb_ios.txt"
-];
+]; // Seems to be returning outdated data (avatar ids and author names are wrong sometimes)
 
 // Unused
 const backupUrls = [
