@@ -26,7 +26,7 @@ function makeAviElement(dict) {
   const clone = aviTemplate.content.cloneNode(true);
 //Test....
   clone.querySelector(".avi-name").innerText = dict.name;
-  clone.querySelector(".vrcn").href = "https://vrchat.com/home/search/" + dict.author;
+  clone.querySelector(".vrcn").href = "https://vrchat.com/home/search/users/" + dict.author;
   clone.querySelector(".avi-author").innerText = dict.author;
   clone.querySelector(".avi-description").innerText = dict.description;
   clone.querySelector(".website").href = "https://vrchat.com/home/avatar/" + dict.avatrId;
